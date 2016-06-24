@@ -1,0 +1,16 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+{% block page_title %} Add Question-Quora {% endblock %}
+{% block extrahead %}
+{% include 'common/nav_bar.html' %}
+{% endblock %}
+{% load material_form %}
+{% block content %}
+{{ error }}
+<form action='{% url 'addquestion' %}' method = 'POST'>
+	{% csrf_token %}
+	{% form form=form %}{% endform %}
+	<input class="btn-floating btn-large waves-effect waves-light red" type='submit' name='submit'value = "Add">
+</form>
+{% endblock %}
+

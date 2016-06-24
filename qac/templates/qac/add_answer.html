@@ -1,0 +1,17 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+{% block page_title %} Add Answer-Quora {% endblock %}
+{% block extrahead %}
+{% include 'common/nav_bar.html' %}
+{% endblock %}
+{% load material_form %}
+{% block content %}
+{{ error }}
+<h2>{{ question.title }}</h2>
+<form action='{% url 'addanswer' id=question.id %}' method = 'POST'>
+	{% csrf_token %}
+	{% form form=form %}{% endform %}
+	<input class="btn-large waves-effect waves-light red" type='submit' name='submit' value = "Add">
+</form>
+{% endblock %}
+

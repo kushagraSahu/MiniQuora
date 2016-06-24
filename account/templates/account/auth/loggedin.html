@@ -1,0 +1,101 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+{% block page_title %} Home {% endblock %}
+{% block extrahead %}
+{% include 'common/nav_bar.html' %}
+{% endblock %}
+{% block content %}
+<div class = 'row intro'>
+	<div class = 'col l2'> <h4>Welcome!</h4></div>
+	<div class = 'col l1 offset-l9'><a href = '{% url 'addquestion' %}' class="btn-floating btn-large waves-effect waves-light red"> <i class="fa fa-plus"></i></a></div>
+</div>
+{% for question in ques_list %}
+<div class="card-panel blue-grey lighten-5 hoverable">
+	<div class = 'card-content'>
+		<div class = 'row'>
+			<div class = 'col l10'>
+				<h5>{{ question }}</h5>
+			</div>
+			<div>
+				{% if question.created_by == user %}
+				<a href="{% url 'editquestion' id=question.id %}"><i class="fa fa-wrench right"></i></a>
+				{% endif %}
+			</div>
+		</div>
+		{% if not question.description == '' %}
+		<div id = 'quest_descr'>
+			<h6>Description: {{ question.description }} </h6>
+		</div>
+		{% endif %}
+		<div class = 'divider'></div>
+		<div class = 'row'>
+			<div class = 'col'><i class="fa fa-circle-o-notch fa-2x fa-spin"></i></div>
+			<div class = 'col'>
+				<p>Asked by: {{ question.created_by.first_name }} {{ question.created_by.last_name }}, {{ question.created_by.description }}</p>
+			</div>
+			<div class = 'col push-l5'>
+				{{ question.created_on }}
+			</div>
+		</div>
+		<div class = 'divider'></div>
+	</div>
+	<div class = 'row'>
+		{% if not question.answers.all %}
+		No Answers Yet!
+		{% endif %}
+		<div class="card-action">
+		<a href='{% url 'addanswer' id=question.id%}'>Add Answer</a>
+		</div>
+		{% for ans in question.answers.all %}
+		<div class = 'row'>
+			<div class = 'col'>
+				<p>Answered by: {{ ans.answered_by.first_name }} {{ ans.answered_by.last_name }}, {{ ans.answered_by.description }} (on {{ ans.created_on }})</p>
+			</div>
+		</div>
+		<div id = 'answer'>
+			{{ ans.text }}
+		</div>
+		{% endfor %}
+	</div>
+</div>
+<div class="progress">
+	<div class="indeterminate"></div>
+</div>
+{% endfor %}
+{% endblock %}
+
+
+
+<!-- <div class="col s12 m8 l6 offset-m2 offset-l3">
+	<div class="card-panel blue lighten-3">
+		<h3>Welcome, {{ user.username }}</h3>
+		<form action="{% url 'logout' %}">
+			<button type="submit" id ="logout-btn" name="logout" class="btn waves-effect waves-light">LogOut</button>
+			<a class="right cyan-text text-darken-4 bold" href="{% url 'add_question' %}">Add Question</a>
+		</form>
+		{% for q in all_q_list %}
+		<div class="card-panel white">
+			<div class="row">
+				<div class="col l1">
+					<i class="fa fa-user fa-2x center"></i>
+				</div>
+				<div class="col l11">
+					<h6>
+						<a href="{% url 'print_question' id=q.id %}">{{ q }}</a>
+						{% if q.created_by == user %}
+						<a href=""><i class="fa fa-pencil-square-o right"></i></a>
+						{% endif %}
+					</h6>
+					<div class = "divider"></div>
+					<h22 class = "grey-text">@{{ q.created_by.username }}</h22>
+					<h22 class = "grey-text right">{{ q.created_on }}</h22>
+					<p class="">{{ q.text }}</p>
+					<a class = "right" href="{% url 'add_answer' q_id=q.id %}">Add Answer</a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+ 

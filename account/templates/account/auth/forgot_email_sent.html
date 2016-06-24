@@ -1,0 +1,5 @@
+{% extends 'common/base.html' %}
+ {% block page_title %} Email Sent{% endblock %}
+ {% block content %}
+ Hey, {{ user.username }}. We have sent you instructions to reset password on {{ user.email }}. 
+ {% endblock %}

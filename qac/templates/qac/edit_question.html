@@ -1,0 +1,20 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+{% block page_title %} Edit Question-Quora {% endblock %}
+{% block extrahead %}
+{% include 'common/nav_bar.html' %}
+{% endblock %}
+{% load material_form %}
+{% block content %}
+{{ error }}
+<form action='{% url 'editquestion' id=question.id %}' method = 'POST'>
+	{% csrf_token %}
+	{% form form=form %}{% endform %}
+	<input class="btn-large waves-effect waves-light red" type='submit' name='submit'value = "EDIT">
+</form>
+<script>
+	$('#id_title').val('{{ question.title }}')
+	$('#id_description').val('{{ question.id_description }}')
+</script>
+{% endblock %}
+

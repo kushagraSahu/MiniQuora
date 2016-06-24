@@ -1,0 +1,5 @@
+{% extends 'common/base.html' %}
+ {% block page_title %}Email Sent{% endblock %}
+ {% block content %}
+ Hey, {{ user.first_name }} {{ user.last_name }}. We have sent you an Activation Link to complete your sign up on {{ user.email }}. 
+ {% endblock %}

@@ -1,0 +1,10 @@
+ {% extends 'common/base.html' %}
+ {% block page_title %}Create Question {% endblock %}
+ {% block content %}
+ <form action = '/qac/save/' method='POST'>
+	{% csrf_token %}
+	<input type='text' name='title' value='Title'>
+	<input type='text' name='description' value = 'Description'>
+	<input type="submit" name='submit' value='Create'>
+ </form>
+ {% endblock %}

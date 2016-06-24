@@ -1,0 +1,36 @@
+{% extends 'common/base.html' %}
+{% load staticfiles %}
+{% block page_title %} Authentication {% endblock %}
+{% load material_form %}
+{% block extrahead %}
+<meta name="google-signin-client_id" content="128494741664-6ifm8isp46v37pig27vtcdkkjhmgbf80.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+{% endblock %}
+{% block content %}
+{{ error }}
+<form action='{% url 'login' %}' method = 'POST'>
+	{% csrf_token %}
+	{% form form=form %}{% endform %}
+	<input type='submit' name='submit'  value = 'Login'>
+</form>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+	gapi.load('auth2', function(){
+		gapi.auth2.init();
+	});
+	function onSignIn(googleUser) {
+		var id_token = googleUser.getAuthResponse().id_token;
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'http://127.0.0.1:8000/account/google_auth');
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.onload = function() {
+			console.log('Signed in as: ' + xhr.responseText);
+		};
+		xhr.send('idtoken=' + id_token);
+	}
+</script>
+{% endblock %}
+
+

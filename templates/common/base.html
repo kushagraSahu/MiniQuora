@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<html>
+<head>
+    <title> {% block page_title %} Questions {% endblock %} </title>
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    {% block extrahead %} {% endblock %}
+    {% include 'material/includes/material_css.html' %}
+</head>
+<body>
+    <main class="container">
+        {% block content %} {% endblock %}
+    </main>
+    <style>
+        .container {
+            padding-top: 20vh;
+        }
+    </style>
+    {% include 'material/includes/material_js.html' %}
+    {% block scripts %} {% endblock %}
+</body>
+</html>
+
+
